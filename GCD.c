@@ -1,43 +1,48 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-int eucliditt(int x, int y)
+int receculid(int m,int n);
+int itteculid(int m,int n);
+
+void main()
 {
-    int m,n;
-    while (y > 0)
-    {
-        m = x / y;
-        n = x - m * y;
-        x = y;
-        y = n;
-    }
-    return x;
+        int m,n,gcd,ch;
+        printf("Enter two positive number :\n");
+        scanf("%d%d",&m,&n);
+        printf("\nenter the choice :1.recursive GCD \t 2. itterative GCD \t 3.exit\n");
+        scanf("%d",&ch);
+        switch(ch)
+        {
+            case 1: gcd=receculid(m,n);
+                    printf("GCD = %d",gcd);
+                    break;
+            case 2: gcd=itteculid(m,n);
+                    printf("GCD = %d",gcd);
+                    break;
+            default:exit(0);
+        }
 }
 
-int euclidrec(int x, int y)
-{
-    if (y == 0)
-    return x;
-    int q = x / y;
-    int r = x - q * y;
-    return euclidrec(y, r);
+int receculid(int m,int n){
+    int r;
+    if(n==0)
+    {
+        return m;
+    }
+    r=m%n;
+    m=n;
+    n=r;
+    return receculid(m,n);
 }
 
-int main()
+int itteculid(int m,int n)
 {
-    int a,b,ch;
-    printf("Enter two positive numbers\n");
-    scanf("%d %d",&a,&b);
-    printf("1.GCD using Iterative 2. GCD using Recursive\n");
-    printf("Enter your choice\n");
-    scanf("%d",&ch);
-    switch(ch)
+    int r;
+    while(n!=0)
     {
-        case 1:printf("GCD of two numbers is %d\n",eucliditt(a,b));
-                break;
-        case 2:printf("GCD of two numbers is %d\n",euclidrec(a,b));
-                break;
-        default:exit(0);
+        r=m%n;
+        m=n;
+        n=r;
     }
-    return 0;
+    return m;
 }
