@@ -1,56 +1,51 @@
 #include<stdio.h>
-#define V 4
-#define INF 1000
-
-void printSolution(int dist[][V]);
-
-int min(int i,int j)
+#include<conio.h>
+#include<process.h>
+int a[10][10],d[10][10],n;
+void floyds();
+int min(int ,int);
+void main()
 {
-  if(i<j)
-    return i;
-  return j;
+	printf("Enter no of vertices\n");
+	scanf("%d",&n);
+	printf("Enter cost adjacency matrix :\n");
+	for(int i=1;i<=n;i++)
+	{
+		for(int j=1;j<=n;j++)
+			scanf("%d",&a[i][j]);
+	}
+	floyds();
+	printf("Distance matrix :\n");
+	for(int i=1;i<=n;i++)
+	{
+		for(int j=1;j<=n;j++)
+			printf("%d ",d[i][j]);
+		printf("\n");
+	}
 }
 
-void floyd(int A[][4])
+void floyds()
 {
-  int i,j,k,P[4][4];        // For Copying the adjacency matrix to the path matrix
-   for(i=0;i<4;i++)
-     for(j=0;j<4;j++)
-        P[i][j]=A[i][j];
-
-   for(k=0;k<4;k++)            // For changing the path matrix step by step
-       for(i=0;i<4;i++)       // For Traversing the columns
-           for(j=0;j<4;j++)  // For Traversing the row
-               P[i][j]=min(P[i][j],P[i][k]+P[k][j]);
-   printSolution(P);
+	for(int i=1;i<=n;i++)
+	{
+		for(int j=1;j<=n;j++)
+			d[i][j]=a[i][j];
+	}
+	for(int k=1;k<=n;k++)
+	{
+		for(int i=1;i<=n;i++)
+		{
+			for(int j=1;j<=n;j++)
+			{
+				d[i][j]=min(d[i][j],d[i][k]+d[k][j]);
+			}
+		}
+	}
 }
-
-void printSolution(int dist[][V])   // Print the Shortest pat matrix
+int min(int a,int b)
 {
-	int i,j;
-    printf ("The following matrix shows the shortest distances"
-            " between every pair of vertices \n");
-    for (i = 0; i < V; i++)
-    {
-        for (j = 0; j < V; j++)
-        {
-            if (dist[i][j] == INF)
-                printf("%7s", "INF");
-            else
-                printf ("%7d", dist[i][j]);
-        }
-        printf("\n");
-    }
-}
-
-
-int main()
-{
-    int graph[V][V] = { {0,   INF,  3, INF},
-                        {2, 0,   INF, INF},
-                        {INF, 7, 0,   1},
-                        {6, INF, INF, 0}
-                      };
-    floyd(graph);
-    return 0;
+	if(a<b)
+		return a;
+	else
+		return b;
 }
